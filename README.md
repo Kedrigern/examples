@@ -1,22 +1,18 @@
-example-projects
-================
+# Examples
 
-Some example projects for fun, edu etc. 
+Some handy examples for edu, fun etc.
 
 Repository contains:
+
  * Minimal working examples
  * Small edu apps (like implementation of linkedlist)
  * Descriptions of using some utils
  * Tips
 
-Unfortunetly some parts are in Czech. I apologize to those who do not speak Czech.
+## Licence
 
-
-Licence
---------
 Licence is [GPL V3](http://www.gnu.org/licenses), [see](LICENCE).
 
+## Author
 
-Author
-------
 Ondřej Profant, ondrej.profant <> gmail.com
