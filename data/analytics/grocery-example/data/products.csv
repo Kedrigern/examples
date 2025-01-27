@@ -1,0 +1,20 @@
+id,short_description,long_description,supplier_ico,status,bio,vegiie,tag1,tag2,tag3,tag4,timestamp_imported
+1,Chléb Šumava,Chléb Šumava,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+2,Žvýkačky mint,Žvýkačky mint,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+3,Rohlík tuk. 45G,Rohlík tuk. 45G,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+4,Dóza 250 ml,Dóza 250 ml,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+5,Šunka,Šunka,CZ12345678,active,,,,,,1,2019-03-01 12:53:11
+6,Minerální voda,Minerální voda,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+7,Jarní cibulka,Jarní cibulka,CZ12345678,active,1,,,1,1,,2019-03-01 12:53:11
+8,Rajče keřík,Rajče keřík,CZ12345678,active,1,,,,,,2019-03-01 12:53:11
+9,"Rajče oval., vanička 200g",Rajče oval. Vanička 200g,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+10,Cigarety,Cigarety,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+11,Veggie šunka,Veggie šunka,CZ12345678,active,1,1,,,,,2019-03-01 12:53:11
+12,Vajíčka M,Vajíčka vel. M,CZ12345678,active,1,,,,,,2019-03-01 12:53:11
+13,Vajíčka M home,Vajíčka vel. M home,PL123456785,active,,,,,,,2019-03-01 12:53:11
+14,Cola,US Cola,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+15,Orange fresh,Orange fresh limo,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+16,Čokolada 120g,Čokolada 120g,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+17,Sladká tyčinka s oříšky,Sladká tyčinka s oříšky,CZ12345678,active,,,,,,,2019-03-01 12:53:11
+18,Sezoní chuť limo,Sezoní chuť limo,CZ12345678,end,,,,,,,2019-03-01 12:53:11
+19,Šunka bal. 120G,Šunka bal. 120G,CZ12345678,active,,,,1,,,2019-03-01 12:53:11
