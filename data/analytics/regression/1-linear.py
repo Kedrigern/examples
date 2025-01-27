@@ -18,7 +18,7 @@ def train_model(X: pd.DataFrame, y: pd.Series) -> LinearRegression:
     do rovnice přímky a vypočítáme odpovídající y.
     """
     model = LinearRegression()
-    model.fit(X, y)
+    model.fit(X.values, y)
     return model
 
 def make_prediction(model: LinearRegression, x: float) -> float:
@@ -28,10 +28,10 @@ def make_prediction(model: LinearRegression, x: float) -> float:
 
 def plot_results(X: pd.DataFrame, y: pd.Series, model: LinearRegression, new_x: float) -> None:
     
-    plt.scatter(X, y)               # vykreslí původní data
+    plt.scatter(X.values, y)               # vykreslí původní data
 
-    pred_line = model.predict(X)    # přímka predikce
-    plt.plot(X, pred_line, color='red')      
+    pred_line = model.predict(X.values)    # přímka predikce
+    plt.plot(X.values, pred_line, color='red')      
 
     pred_point = make_prediction(model, new_x)  # predikce konkrtétního bodu
     plt.scatter(new_x, pred_point, color='green', label=f"Predikce pro x={new_x}")
@@ -42,9 +42,9 @@ def plot_results(X: pd.DataFrame, y: pd.Series, model: LinearRegression, new_x: 
     plt.savefig('../img/reg-rand-lin.png')
     plt.show()
 
-    print(f"Směrnice (slope): {model.coef_[0]}")
-    print(f"Průsečík s osou y: {model.intercept_}")
-    print(f"Predikovaná hodnota pro x={new_x}: {pred_point}")
+    print(f"Směrnice (slope): {model.coef_[0]:.4f}")
+    print(f"Průsečík s osou y: {model.intercept_:.4f}")
+    print(f"Predikovaná hodnota pro x={new_x}: {pred_point:.4f}")
 
 def main() -> None:
     data = load_data()
