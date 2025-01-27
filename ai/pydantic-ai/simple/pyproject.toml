@@ -1,0 +1,10 @@
+[project]
+name = "simple"
+version = "0.1.0"
+description = "Simple project"
+readme = "../../README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic-ai>=0.0.17",
+    "python-dotenv>=1.0.1",
+]

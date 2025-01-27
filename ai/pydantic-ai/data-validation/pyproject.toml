@@ -1,0 +1,11 @@
+[project]
+name = "data-validation"
+version = "0.1.0"
+description = "Example of interaction with AI and returned data structure instead of text"
+readme = "../../README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.10.4",
+    "pydantic-ai>=0.0.17",
+    "python-dotenv>=1.0.1",
+]
