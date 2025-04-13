@@ -3,30 +3,41 @@ import sys
 import argparse
 from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient, ContainerClient
+
 # from azure.storage.blob.aio import BlobServiceClient # async support
 from azure.data.tables import TableServiceClient, TableClient
 
 PARTITION: str = "kv"
 
 
-def get_blob_container_client() -> ContainerClient:
-    connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-    container_name = os.getenv("AZURE_CONTAINER_NAME", "pytrysundaycontainer")
+def get_access_token() -> str:
+    """Find proper access token in .env file"""
+    connection_string: str | None = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+    if not connection_string:
+        connection_string: str | None = os.getenv("AZURE_SAS_TOKEN")
     if not connection_string:
         raise Exception("Connection string not defined in .env")
-    blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+    return connection_string
+
+
+def get_blob_container_client() -> ContainerClient:
+    container_name: str | None = os.getenv("AZURE_CONTAINER_NAME")
+    if not container_name:
+        raise Exception("Container name not defined in .env")
+    access_token: str = get_access_token()
+    blob_service_client = BlobServiceClient.from_connection_string(access_token)
     container_client = blob_service_client.get_container_client(container_name)
     container_client.get_container_properties()
     return container_client
 
 
 def get_table_client() -> TableClient:
-    connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
-    table_name = os.getenv("AZURE_TABLE_NAME", "pytrysundaytable")
-    if not connection_string:
-        raise Exception("Connection string not defined in .env")
+    table_name: str | None = os.getenv("AZURE_TABLE_NAME")
+    if not table_name:
+        raise Exception("Table name not defined in .env")
+    access_token: str = get_access_token()
     table_service_client = TableServiceClient.from_connection_string(
-        conn_str=connection_string
+        conn_str=access_token
     )
     table_client = table_service_client.create_table_if_not_exists(
         table_name=table_name
@@ -34,12 +45,12 @@ def get_table_client() -> TableClient:
     return table_client
 
 
-def blob_list(container_client) -> None:
+def blob_list(container_client: ContainerClient) -> None:
     for blob in container_client.list_blobs():
         print(blob.name)
 
 
-def blob_upload(container_client, file_path) -> None:
+def blob_upload(container_client: ContainerClient, file_path: str) -> None:
     file_name = os.path.basename(file_path)
     with open(file_path, "rb") as data:
         container_client.upload_blob(name=file_name, data=data, overwrite=True)

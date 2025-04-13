@@ -12,9 +12,11 @@ from main import (
 
 # --- Fake clients for blob storage ---
 
+
 class FakeBlob:
     def __init__(self, name: str) -> None:
         self.name = name
+
 
 class FakeBlobContainer:
     def __init__(self) -> None:
@@ -32,7 +34,9 @@ class FakeBlobContainer:
         # Simulace správného získání properties
         pass
 
+
 # --- Fake client for table storage ---
+
 
 class FakeTableClient:
     def __init__(self) -> None:
@@ -52,7 +56,9 @@ class FakeTableClient:
         # Ignorujeme filtr pro potřeby testu
         return self.entities.values()
 
+
 # --- Blob Storage tests ---
+
 
 def test_blob_list(capsys, monkeypatch):
     fake_container = FakeBlobContainer()
@@ -60,6 +66,7 @@ def test_blob_list(capsys, monkeypatch):
     captured = capsys.readouterr().out
     assert "file1.txt" in captured
     assert "file2.txt" in captured
+
 
 def test_blob_upload(tmp_path, capsys):
     fake_container = FakeBlobContainer()
@@ -71,7 +78,9 @@ def test_blob_upload(tmp_path, capsys):
     assert "Uploaded file 'test.txt'." in captured
     assert "test.txt" in fake_container.uploads
 
+
 # --- Table Storage tests ---
+
 
 def test_table_set_and_get(capsys):
     fake_table = FakeTableClient()
@@ -85,6 +94,7 @@ def test_table_set_and_get(capsys):
     captured = capsys.readouterr().out
     assert "k1: v1" in captured
 
+
 def test_table_list(capsys):
     fake_table = FakeTableClient()
     table_set(fake_table, "k1", "v1")
@@ -96,7 +106,9 @@ def test_table_list(capsys):
     assert "k1: v1" in captured
     assert "k2: v2" in captured
 
+
 # --- CLI integration tests ---
+
 
 def test_main_file_list(monkeypatch, capsys):
     # Monkeypatchujeme funkci get_blob_container_client, aby vrátila fake client
@@ -108,6 +120,7 @@ def test_main_file_list(monkeypatch, capsys):
     assert "file1.txt" in captured
     assert "file2.txt" in captured
 
+
 def test_main_val_get(monkeypatch, capsys):
     fake_table = FakeTableClient()
     # Vložíme fake entitu do tabulky
@@ -117,6 +130,7 @@ def test_main_val_get(monkeypatch, capsys):
     main()
     captured = capsys.readouterr().out
     assert "k1: v1" in captured
+
 
 def test_main_val_set(monkeypatch, capsys):
     fake_table = FakeTableClient()

@@ -47,6 +47,16 @@ echo "AZURE_STORAGE_CONNECTION_STRING=\"$CONN_STRING\"" >> .env
 echo "AZURE_CONTAINER_NAME=\"$CNAME\"" >> .env
 echo "AZURE_TABLE_NAME=\"$TNAME\"" >> .env
 
+# Or use SAS token:
+SAS_TOKEN=$(az storage container generate-sas \
+  --account-name $SANAME \
+  --name $CNAME \
+  --permissions rlw \ # read, list
+  --expiry 2030-01-01T00:00:00Z \
+  --https-only \
+  --output tsv)
+echo "AZURE_SAS_TOKEN=\"$SAS_TOKEN\"" >> .env
+
 # OPT: Delete the resource group and all resources within it:
 az group delete --name $GNAME --yes --no-wait
 ```
