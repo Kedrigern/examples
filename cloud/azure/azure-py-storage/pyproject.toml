@@ -1,0 +1,17 @@
+[project]
+name = "azure-py-storage"
+version = "0.1.0"
+description = "This project demonstrates the setup of Azure Storage alongside a simple Python application that interacts with it. It shows basic Azure CLI commands, libraries, and best practices."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "azure-data-tables>=12.6.0",
+    "azure-storage-blob>=12.25.1",
+    "python-dotenv>=1.1.0",
+]
+
+[dependency-groups]
+dev = ["mypy>=1.15.0", "pytest>=8.3.5", "ruff>=0.11.5"]
+
+[tool.mypy]
+ignore_missing_imports = true
