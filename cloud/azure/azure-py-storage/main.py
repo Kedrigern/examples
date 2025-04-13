@@ -3,6 +3,7 @@ import sys
 import argparse
 from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient, ContainerClient
+# from azure.storage.blob.aio import BlobServiceClient # async support
 from azure.data.tables import TableServiceClient, TableClient
 
 PARTITION: str = "kv"
