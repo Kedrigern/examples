@@ -32,7 +32,7 @@ def main():
         if isinstance(result.data, List):
             print("Result is list")
         print("----")
-    
+
 
 if __name__ == "__main__":
     main()
