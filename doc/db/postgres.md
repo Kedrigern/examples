@@ -2,22 +2,19 @@
 
 ## Instalace
 
-Samotná instalace Fedora 23:
-```
+Samotná instalace Fedora 41:
+```bash
 sudo dnf install postgresql-server postgresql-contrib
 sudo systemctl enable postgresql
 sudo postgresql-setup --initdb --unit postgresql
 sudo systemctl status postgresql
-```
-
-Konfigurace:
-```
 su root
 su - postgres
+psql                    # Login into postgre shell
 ```
 
 Konfigy:
-```
+```bash
 /var/lib/pgsql/data/postgresql.conf	# obecný konfig
 /var/lib/pgsql/data/pg_hba.conf 	# nastavení přístupů
 ```
@@ -46,8 +43,9 @@ Konfigy:
 | \q  	     | quit              |
 | \l  	     | list of databases |
 | \dt        | list of tables    |
-| \c <dbname>| connect to dbname |
-| \h <cmd>   | help for comand   |
+| \dT        | custom types      |
+| \c dbname | connect to dbname |
+| \h cmd   | help for command   |
 
 ### pgsql
 
@@ -167,7 +165,7 @@ composer.json:
 
 ```json
  "require": {
-    "php": ">= 5.3.0",    
+    "php": ">= 5.3.0",
     "nette/nette": ">= 2.0.7",
     "dg/dibi": "2.0.*"
   }

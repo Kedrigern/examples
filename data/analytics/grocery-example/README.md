@@ -77,16 +77,16 @@ DuckDB můžeme mít jako samostanou aplikaci. Následně:
 ./duckdb data/data.db   # data se ukládají do souboru data/data.db
 ```
 
-Běžné použití SQL, jen pozor na dosti omezené použití `alter table`:
+Běžné použití SQL:
 ```sql
+SELECT now() as now, TIMESTAMP '2020-06-01' as d2020, TIMESTAMP '1999-01-01' as d1999, now > d2020, d2020 BETWEEN d1999 AND now;
 PRAGMA database_list;
 PRAGMA show_tables;
 CREATE TABLE user (
-    uuid BIGINT PRIMARY KEY,
-    name VARCHAR NOT NULL, 
-    email VARCHAR UNIQUE,
-    rating INT);
--- ALter table nelze pokud jsou již navazané indexy či cizí klíče
+      uuid BIGINT PRIMARY KEY,
+      name VARCHAR NOT NULL,
+      email VARCHAR UNIQUE CHECK ((NOT contains(email, ' ')) AND contains(email, '@')),
+      rating INT CHECK (rating >= 0));
 ALTER TABLE user RENAME uuid TO id; 
 CREATE INDEX u_idx ON user (rating);
 CREATE TABLE inventory (
@@ -137,9 +137,9 @@ CREATE TABLE purchase (
     store_site INT,
     i_quantity BIGINT,
     i_measurement BIGINT,
-    price_per_item DECIMAL,  -- type double does not exists in PGSQL
-    price_item_total DECIMAL,-- changed type
-    price DECIMAL,           -- changed type
+    price_per_item DECIMAL CHECK (price_per_item > 0),  -- type double does not exists in PGSQL
+    price_item_total DECIMAL,        -- changed type
+    price DECIMAL CHECK (price > 0), -- changed type
     purchase_id BIGINT,
     category VARCHAR,
     promotion BOOLEAN        -- changed type
