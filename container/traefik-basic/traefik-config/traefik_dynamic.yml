@@ -1,0 +1,19 @@
+http:
+  routers:
+    web-router:
+      rule: "PathPrefix(`/`)"
+      service: web-service
+      entryPoints:
+        - web
+
+    dashboard-router:
+      rule: "PathPrefix(`/dashboard`) || PathPrefix(`/api`)"
+      service: "api@internal"
+      entryPoints:
+        - web
+
+  services:
+    web-service:
+      loadBalancer:
+        servers:
+          - url: "http://web:8080"

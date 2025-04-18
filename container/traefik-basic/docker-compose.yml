@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik:3.3.6
+    container_name: traefik
+    command:
+      - --configFile=/etc/traefik/traefik.yml
+    ports:
+      - "80:80"
+    volumes:
+      - ./traefik-config/:/etc/traefik/:Z
+    depends_on:
+      - web
+    networks:
+      - webnet
+
+  web:
+    build:
+        context: ./web
+        dockerfile: Dockerfile
+    container_name: web
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
+

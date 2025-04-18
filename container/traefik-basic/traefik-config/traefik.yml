@@ -1,0 +1,11 @@
+entryPoints:
+  web:
+    address: ":80"
+
+api:                        # zapne dashboard
+  dashboard: true
+
+providers:
+  file:
+    filename: "/etc/traefik/traefik_dynamic.yml"
+    watch: true
