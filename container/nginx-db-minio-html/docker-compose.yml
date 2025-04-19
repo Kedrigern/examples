@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+  proxy:
+    image: nginx:alpine
+    container_name: "${PROJECT_PREFIX}-proxy"
+    ports:
+      - "80:80"                # go outside
+    volumes:
+      - ./proxy/default.conf:/etc/nginx/conf.d/default.conf:Z
+    networks:
+      - internal_net
+  
+  postgres:
+    image: postgres:17
+    container_name: "${PROJECT_PREFIX}-db"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data:Z
+    networks:
+      - internal_net
+
+  minio:
+    image: minio/minio:latest
+    container_name: "${PROJECT_PREFIX}-storage"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BROWSER_REDIRECT_URL: http://localhost/minio/ui/
+    command: ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - minio-data:/data:Z
+    expose:
+      - "9000"
+      - "9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+        - internal_net
+
+  
+  minio-init:
+    image: minio/mc:latest
+    container_name: "${PROJECT_PREFIX}-storage-init-bucket"
+    # start only _after_ minio container has been started
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c '
+        # wait until MinIO API is reachable
+        until mc alias set myminio http://minio:9000 \
+              "${MINIO_ROOT_USER}" "${MINIO_ROOT_PASSWORD}" >/dev/null 2>&1
+        do
+          echo "Waiting for MinIO…" && sleep 2
+        done
+
+        # check if bucket exists, skip or create
+        if mc ls myminio/"${MINIO_BUCKET}" >/dev/null 2>&1; then
+          echo "Bucket \"${MINIO_BUCKET}\" already exists; skipping initialization"
+        else
+          mc mb myminio/"${MINIO_BUCKET}" \
+             && echo "Bucket \"${MINIO_BUCKET}\" created"
+        fi
+      '
+  web:
+    image: nginx:alpine
+    container_name: "${PROJECT_PREFIX}-webapp"
+    volumes:
+      - ./web/index.html:/usr/share/nginx/html/index.html:Z
+    expose:
+      - "80"                 # only internal
+    networks:
+      - internal_net
+
+networks:
+  internal_net:
+    driver: bridge
+
+volumes:
+  minio-data:
+  postgres-data:
