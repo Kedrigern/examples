@@ -6,6 +6,7 @@ COPY pyproject.toml ./
 
 RUN uv sync
 
+COPY static ./static
 COPY src ./src
 
 EXPOSE 5000

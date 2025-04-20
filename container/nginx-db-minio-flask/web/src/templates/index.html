@@ -30,24 +30,49 @@
     <h2>Database</h2>
     <table>
       <thead>
-        <th>PostgreSQL</th>
-        <th></th>
+        <tr>
+          <th>PostgreSQL</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
         <tr>
           <td>Version</td>
           <td>{{db_info['version']}}</td>
-        <tr>
         </tr>
+        <tr>
           <td>DB uptime</td>
           <td>{{db_info['uptime']}}</td>
         </tr>
-        </tr>
+        <tr>
           <td>Table count</td>
           <td>{{db_info['table_count']}}</td>
         </tr>
       </tbody>
     </table>
+
     <h2>Minio - storage</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Bucket</th>
+          <th>Objects count</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for bucket in minio_info['buckets'] %}
+        <tr>
+          <td>{{bucket['name']}}</td>
+          <td>{{bucket['object_count']}}</td>
+          <td>{{bucket['total_size']}}</td>
+        <tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p>
+      <img src="{{logo_url}}" />
+    </p>
   </body>
 </html>

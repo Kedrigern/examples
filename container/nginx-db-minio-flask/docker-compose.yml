@@ -59,11 +59,15 @@ services:
         do
           echo "Waiting for MinIO…" && sleep 2
         done
+
         if mc ls myminio/"${MINIO_BUCKET}" >/dev/null 2>&1; then
           echo "Bucket exists; skipping"
         else
           mc mb myminio/"${MINIO_BUCKET}" && echo "Bucket created"
         fi
+
+       mc anonymous set download myminio/"${MINIO_BUCKET}" \
+         && echo "Bucket policy set to public‑read"
       '
   
   web:
