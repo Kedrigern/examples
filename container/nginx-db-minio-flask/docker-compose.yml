@@ -1,0 +1,80 @@
+version: "3.9"
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  minio-data:
+  postgres-data:
+
+services:
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+      - minio
+      - postgres
+    networks:
+      - backend
+  
+  postgres:
+    image: postgres:17
+    env_file: .env
+    volumes:
+      - postgres-data:/var/lib/postgresql/data:Z
+    networks:
+      - backend
+
+  minio:
+    image: minio/minio:latest
+    env_file: .env
+    command: ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - minio-data:/data:Z
+    networks:
+      - backend
+    expose:
+      - "9000"
+      - "9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  minio-init:
+    image: minio/mc:latest
+    env_file: .env
+    depends_on:
+      - minio
+    networks:
+      - backend
+    entrypoint: >
+      /bin/sh -c '
+        until mc alias set myminio http://minio:9000 \
+              "${MINIO_ROOT_USER}" "${MINIO_ROOT_PASSWORD}" >/dev/null 2>&1
+        do
+          echo "Waiting for MinIO…" && sleep 2
+        done
+        if mc ls myminio/"${MINIO_BUCKET}" >/dev/null 2>&1; then
+          echo "Bucket exists; skipping"
+        else
+          mc mb myminio/"${MINIO_BUCKET}" && echo "Bucket created"
+        fi
+      '
+  
+  web:
+    build: ./web
+    depends_on:
+      - minio
+      - postgres
+    expose:
+      - "5000"      
+    env_file: .env
+    environment:
+      FLASK_APP: src.app
+    networks:
+      - backend
