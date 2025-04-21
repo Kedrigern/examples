@@ -1,0 +1,18 @@
+[project]
+name = "web"
+version = "0.1.0"
+description = "Example Flask app"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.0",
+    "minio>=7.2.15",
+    "psycopg[binary]>=3.2.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "ruff>=0.11.6",
+    "watchdog>=6.0.0",
+]

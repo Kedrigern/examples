@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  proxy:
+    volumes:
+      - ./proxy/dev.conf:/etc/nginx/conf.d/default.conf:ro,Z
+
+  web:
+    environment:
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+    volumes:
+      - ./web/src:/app/src:ro,Z
+    command: sh -c "uv run flask run --host=0.0.0.0 --port=5000"
