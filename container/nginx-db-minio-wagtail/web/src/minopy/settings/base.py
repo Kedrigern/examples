@@ -22,6 +22,7 @@ REPO_ROOT = Path(BASE_DIR).parents[1]
 
 load_dotenv(REPO_ROOT / '.env')
 
+"""
 print(f"Base dir: {BASE_DIR}")
 print(f"Repo root: {REPO_ROOT}")
 
@@ -30,7 +31,7 @@ print(os.getenv('POSTGRES_USER'))
 print(os.getenv('POSTGRES_PASSWORD'))
 print(os.getenv('POSTGRES_HOST', 'postgres'))
 print(os.getenv('POSTGRES_PORT', 5432))
-
+"""
 #sys.exit()
 
 
@@ -43,6 +44,7 @@ print(os.getenv('POSTGRES_PORT', 5432))
 
 INSTALLED_APPS = [
     "home",
+    "storages",
     "search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -160,13 +162,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+#MEDIA_URL = "/media/"
 
 # Default storage settings, with the staticfiles storage updated.
 # See https://docs.djangoproject.com/en/5.2/ref/settings/#std-setting-STORAGES
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "minopy.storage_backends.MinioMediaStorage",
     },
     # ManifestStaticFilesStorage is recommended in production, to prevent
     # outdated JavaScript / CSS assets being served from cache
@@ -174,8 +176,25 @@ STORAGES = {
     # See https://docs.djangoproject.com/en/5.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    },
+    }
 }
+
+# Default file storage: media → MinIO bucket
+DEFAULT_FILE_STORAGE = "minopy.storage_backends.MinioMediaStorage"
+
+# MinIO credentials from .env
+AWS_S3_ENDPOINT_URL = os.getenv("MINIO_ENDPOINT_URL")
+AWS_ACCESS_KEY_ID = os.getenv("MINIO_ROOT_USER")
+AWS_SECRET_ACCESS_KEY = os.getenv("MINIO_ROOT_PASSWORD")
+AWS_STORAGE_BUCKET_NAME = os.getenv("MINIO_BUCKET")
+
+# Minimal S3 settings for MinIO
+# AWS_S3_REGION_NAME = os.getenv("MINIO_REGION", "us-east-1")
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_ADDRESSING_STYLE = "path"
+
+# URL prefix for serving media files
+MEDIA_URL = "/media/"
 
 # Django sets a maximum of 1000 fields per form by default, but particularly complex page models
 # can exceed this limit within Wagtail's page editor.
