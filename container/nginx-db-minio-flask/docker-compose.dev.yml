@@ -5,6 +5,14 @@ services:
     volumes:
       - ./proxy/dev.conf:/etc/nginx/conf.d/default.conf:ro,Z
 
+  postgres:
+    ports:
+      - "15432:5432"
+
+  minio:
+    ports:
+      - "19000:9000"
+
   web:
     environment:
       FLASK_ENV: development
