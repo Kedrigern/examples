@@ -76,9 +76,7 @@ services:
       - minio
       - postgres
     expose:
-      - "5000"      
+      - "8000"      
     env_file: .env
-    environment:
-      FLASK_APP: src.app
     networks:
       - backend
