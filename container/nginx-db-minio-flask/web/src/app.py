@@ -7,8 +7,8 @@ from src.services.storage import get_minio_info, ensure_logo
 if not os.getenv("MINIO_BUCKET"):
     load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
 
-REQUIRED = ["POSTGRES_HOST", "POSTGRES_PORT",
-            "MINIO_ENDPOINT", "MINIO_ROOT_USER",
+REQUIRED = ["POSTGRES_USER", "POSTGRES_PASSWORD",
+            "MINIO_ENDPOINT_URL", "MINIO_ROOT_USER",
             "MINIO_ROOT_PASSWORD", "MINIO_BUCKET"]
 
 missing = [v for v in REQUIRED if not os.getenv(v)]

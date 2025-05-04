@@ -1,5 +1,13 @@
 version: "3.9"
 
+networks:
+  internal_net:
+    driver: bridge
+
+volumes:
+  minio-data:
+  postgres-data:
+
 services:
   proxy:
     image: nginx:alpine
@@ -72,10 +80,3 @@ services:
     networks:
       - internal_net
 
-networks:
-  internal_net:
-    driver: bridge
-
-volumes:
-  minio-data:
-  postgres-data:
