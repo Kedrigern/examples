@@ -20,23 +20,14 @@ All services share a private network; only the proxy is exposed externally.
    sudo dnf install podman podman-compose
    ```
 
-2. Allow rootless Podman to bind port 80:
+2. Allow rootless Podman to bind port 80 (or use unprivileged port)
 
    ```bash
    sudo sysctl net.ipv4.ip_unprivileged_port_start=80
    echo "net.ipv4.ip_unprivileged_port_start=80" | sudo tee /etc/sysctl.d/rootless_ports.conf
    ```
 
-3. Create a `.env` file:
-
-   ```dotenv
-   MINIO_ROOT_USER=minio
-   MINIO_ROOT_PASSWORD=minio123
-   MINIO_BUCKET=mybucket
-   POSTGRES_USER=user
-   POSTGRES_PASSWORD=pass
-   POSTGRES_DB=appdb
-   ```
+3. Create a `.env` file from `.env.example`
 
 ## Usage
 
@@ -63,13 +54,13 @@ All services share a private network; only the proxy is exposed externally.
 - **MinIO API** (list buckets):
 
   ```bash
-  curl http://localhost/minio/
+  curl http://localhost/storage/
   ```
 
 - **MinIO Console UI**: open in browser:
 
   ```txt
-  http://localhost/minio/ui/
+  http://localhost/storage/ui/
   ```
 
 - **PostgreSQL** (internal): connect from another service by hostname `postgres:5432`.
