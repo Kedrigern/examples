@@ -20,10 +20,39 @@
 - **Queue:** Messaging service similar to RabbitMQ for asynchronous communication (not intended to replace Kafka).
 - **DataLake:** A specialized Blob storage with namespace support for big data analytics and file system-like operations.
 
+## Table storage
+
+Always there are columns
+
+- `PartitionKey`: determines the partition  
+- `RowKey`: unique key i partition  
+  => (`PartitionKey`,`RowKey`) globaly unique  
+- `Timestamp`: last modification time
+
+Rest of columns are dynamic as you use them.
+
+[Data types](https://learn.microsoft.com/en-us/rest/api/storageservices/Understanding-the-Table-Service-Data-Model#property-types): `string`, `int32`, `int64`, `int128` (guid), `double`, `datetime`, `bool`, `byte[]`
+
+Filtering with [OData](https://www.odata.org/):
+
+- operators: `eq`, `gt`, `le`, `and`, `or`, `not`
+- string: `'My string value'`
+- bool: `true`, `false`
+- [timestamp](https://learn.microsoft.com/en-us/rest/api/storageservices/formatting-datetime-values): `datetime'YYYY-MM-DDTHH:MM:SSZ'`
+
+Filtering examples:
+
+- `Age gt 18 and Age lt 30`
+- `not( Age gt 18 )`
+- `Timestamp eq datetime'2023-10-23T10:35:43.3385326Z'`
+
+You can use: `select`, `top`
+You cannot use: `count`, `orderby`
+
 ## [Concurrency in Blob Storage](https://learn.microsoft.com/en-in/azure/storage/blobs/concurrency-manage)
 
 - **Last writer wins:** The default mode where the last write operation takes precedence.
-- **Optimistic concurrency:** Uses the `if-match` header to ensure data integrity; returns error 412 (precondition failed) if there is a version mismatch.
+- **Optimistic concurrency:** Uses the `if-match` header to ensure data integrity; returns error 412 (precondition failed) if there is a version mismatch. `etag` (entity tag) is used to determinate age.
 - **Pessimistic concurrency:** Implements a lease mechanism on a blob (from 15 to 60 seconds) to prevent concurrent write conflicts.
   
 **Snapshot isolation for read:** Allows the creation of snapshots ensuring a consistent view of the data during reads.
