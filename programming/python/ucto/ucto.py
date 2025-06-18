@@ -14,10 +14,11 @@ Parsování přímo z webu: https://github.com/pirati-byro/fo-vydaje2017 (zbyte�
 import csv
 import sqlite3
 
-year = '2017'
-dbfile = 'ucto3.db'
-csvfile = 'ucto' + year + '.csv'
+year = "2017"
+dbfile = "ucto3.db"
+csvfile = "ucto" + year + ".csv"
 vydaje = []
+
 
 def parsePolozka(pol):
     """
@@ -27,11 +28,12 @@ def parsePolozka(pol):
         (stredisko, polozka_num)
     """
     try:
-        ns = pol.split(':')
+        ns = pol.split(":")
         pair = (ns[-2], ns[-1])
         return pair
     except:
-        return ('stana', '')
+        return ("stana", "")
+
 
 def processVydaj(records, results):
     """
@@ -60,17 +62,18 @@ def processVydaj(records, results):
     for item in records:
         key = item[2]
         val = item[3]
-        if key == 'položka':
-            if val == '':
+        if key == "položka":
+            if val == "":
                 return  # nejedná se o vydaj
-            vydaj['středisko'], vydaj['položka'] = parsePolozka(val)
+            vydaj["středisko"], vydaj["položka"] = parsePolozka(val)
             continue
         vydaj[item[2]] = item[3]
     results.append(vydaj)
 
+
 with sqlite3.connect(dbfile) as conn:
     c = conn.cursor()
-    namespace = 'fo:vydaje:fo_%_' + year
+    namespace = "fo:vydaje:fo_%_" + year
     args = (namespace,)
     pids = c.execute("select pid from pages where page like ?;", args).fetchall()
     for row in pids:
@@ -78,9 +81,44 @@ with sqlite3.connect(dbfile) as conn:
         records = c.execute("select * from data where pid = '%d'" % pid).fetchall()
         processVydaj(records, vydaje)
 
-with open(csvfile, 'w') as csvw:
-    fieldnames = ['značka', 'středisko', 'položka', 'částka', 'podáno', 'proplaceno', 'redmine', 'popis'] # jakub
-    fieldnames = ['značka', 'středisko', 'položka', 'částka', 'podáno', 'proplaceno', 'souhlas', 'usnesení', 'název', 'vs', 'příjemce', 'záměr', 'doklad', 'ks', 'rok', 'druh', 'ss', 'účet', 'číslo', 'účtováno', 'hospodář', 'rest', 'zdroj', 'složka', 'účel'] # full
+with open(csvfile, "w") as csvw:
+    fieldnames = [
+        "značka",
+        "středisko",
+        "položka",
+        "částka",
+        "podáno",
+        "proplaceno",
+        "redmine",
+        "popis",
+    ]  # jakub
+    fieldnames = [
+        "značka",
+        "středisko",
+        "položka",
+        "částka",
+        "podáno",
+        "proplaceno",
+        "souhlas",
+        "usnesení",
+        "název",
+        "vs",
+        "příjemce",
+        "záměr",
+        "doklad",
+        "ks",
+        "rok",
+        "druh",
+        "ss",
+        "účet",
+        "číslo",
+        "účtováno",
+        "hospodář",
+        "rest",
+        "zdroj",
+        "složka",
+        "účel",
+    ]  # full
     writer = csv.DictWriter(csvw, fieldnames=fieldnames)
     writer.writeheader()
     for vydaj in vydaje:

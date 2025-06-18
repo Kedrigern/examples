@@ -37,21 +37,25 @@ space = "%20"
 group = "Celostatni%20forum"
 url = "https://graph.pirati.cz/group/{group}/members".format(group=group)
 
+
 def get_json(url):
-    raw_data = urlopen(url).read().decode('utf8')
+    raw_data = urlopen(url).read().decode("utf8")
     return json.loads(raw_data)
+
 
 def get_cf():
     group = "Celostatni%20forum"
     url = "https://graph.pirati.cz/group/{group}/members".format(group=group)
     return get_json(url)
 
+
 def get_user(username):
     url = "https://graph.pirati.cz/user/{username}".format(username=username)
     return get_json(url)
 
+
 def get_members_data():
-    members_nick = [m['username'] for m in get_cf()]
+    members_nick = [m["username"] for m in get_cf()]
     print("Members count: {0}".format(len(members_nick)))
     members = []
     for m in members_nick:
@@ -60,24 +64,31 @@ def get_members_data():
     print("|")
     return members
 
+
 def csv_write(data, filename="members.csv"):
-    with open(filename, 'w', newline='\n') as csvfile:
-        writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    with open(filename, "w", newline="\n") as csvfile:
+        writer = csv.writer(
+            csvfile, delimiter=";", quotechar='"', quoting=csv.QUOTE_MINIMAL
+        )
         # header
         writer.writerow(["name", "surname", "email", "username", "address", "rank"])
         for d in data:
-            if d['fullname']:
-                fullname = d['fullname'].rsplit(" ", 1)
+            if d["fullname"]:
+                fullname = d["fullname"].rsplit(" ", 1)
             else:
-                fullname = d['username'].rsplit(".", 1)
-            record = fullname + [d["email"], d["username"], d["address"], d['rank']]
+                fullname = d["username"].rsplit(".", 1)
+            record = fullname + [d["email"], d["username"], d["address"], d["rank"]]
             writer.writerow(record)
 
+
 def from_usernames_create_csv(usernames, filename="members.csv"):
-    with open(filename, 'w', newline='\n') as csvfile:
-        writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    with open(filename, "w", newline="\n") as csvfile:
+        writer = csv.writer(
+            csvfile, delimiter=";", quotechar='"', quoting=csv.QUOTE_MINIMAL
+        )
         writer.writerow(["username", "email", "name"])
         for u in usernames:
             writer.writerow([u, u + "@pirati.cz", u.replace(".", " ")])
+
 
 csv_write(get_members_data())

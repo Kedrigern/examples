@@ -6,19 +6,21 @@ Greatly inspired by awesome book Divide into Python 3
 import re
 
 roman_numeral_map = (
-    ('M',  1000),
-    ('CM', 900),
-    ('D',  500),
-    ('CD', 400),
-    ('C',  100),
-    ('XC', 90),
-    ('L',  50),
-    ('XL', 40),
-    ('X',  10),
-    ('IX', 9),
-    ('V',  5),
-    ('IV', 4),
-    ('I',  1))
+    ("M", 1000),
+    ("CM", 900),
+    ("D", 500),
+    ("CD", 400),
+    ("C", 100),
+    ("XC", 90),
+    ("L", 50),
+    ("XL", 40),
+    ("X", 10),
+    ("IX", 9),
+    ("V", 5),
+    ("IV", 4),
+    ("I", 1),
+)
+
 
 def is_roman_number(roman: str) -> bool:
     reg = """
@@ -33,6 +35,7 @@ def is_roman_number(roman: str) -> bool:
         return True
     else:
         return False
+
 
 def to_roman(number: int, verbose: bool = False) -> str:
     """Return roman number (string) from integer.
@@ -67,6 +70,7 @@ def to_roman(number: int, verbose: bool = False) -> str:
         print(f"{number} = {result}")
     return result
 
+
 def from_roman(roman: str, verbose: bool = False) -> int:
     """Return integer from roman number.
 
@@ -85,7 +89,7 @@ def from_roman(roman: str, verbose: bool = False) -> int:
     result: int = 0
     index: int = 0
     for numeral, integer in roman_numeral_map:
-        while roman[index:index+len(numeral)] == numeral:
+        while roman[index : index + len(numeral)] == numeral:
             result += integer
             index += len(numeral)
             if verbose:
@@ -93,6 +97,7 @@ def from_roman(roman: str, verbose: bool = False) -> int:
     if verbose:
         print(f"{roman} = {result}")
     return result
+
 
 if __name__ == "__main__":
     to_roman(98)

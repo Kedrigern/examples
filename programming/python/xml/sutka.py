@@ -15,16 +15,17 @@ url = "http://www.sutka.eu"
 html = urlopen(url)
 soup = BeautifulSoup(html, "lxml")
 
-div = soup.find('div', {'id': 'header-info_availability'})
+div = soup.find("div", {"id": "header-info_availability"})
 
-visitors_text = div.find('p').text # e.g. Aktuální počet návštěvníků: 45 (Bazén), 0 (Aquapark)
-obsazenost_text = div.findAll('p')[1].text # Obsazenost: 11% 
+visitors_text = div.find(
+    "p"
+).text  # e.g. Aktuální počet návštěvníků: 45 (Bazén), 0 (Aquapark)
+obsazenost_text = div.findAll("p")[1].text  # Obsazenost: 11%
 
-vpattern = r'\w+ \w+ \w+: (\d+) \((\w+)\), (\d+) \((\w+)\)'
-apattern = r'\w*: (\d+[.\d+]*)%'
+vpattern = r"\w+ \w+ \w+: (\d+) \((\w+)\), (\d+) \((\w+)\)"
+apattern = r"\w*: (\d+[.\d+]*)%"
 
-(bazen, _, aquapark, _) = re.search(vpattern, visitors_text ).groups()
-procent = re.search(apattern, obsazenost_text ).groups()[0]
+(bazen, _, aquapark, _) = re.search(vpattern, visitors_text).groups()
+procent = re.search(apattern, obsazenost_text).groups()[0]
 
-print('Bazén: %s, Aquapark: %s, procent: %s%%' % (bazen, aquapark, procent))
-
+print("Bazén: %s, Aquapark: %s, procent: %s%%" % (bazen, aquapark, procent))

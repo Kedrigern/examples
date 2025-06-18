@@ -20,7 +20,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 REPO_ROOT = Path(BASE_DIR).parents[1]
 
-load_dotenv(REPO_ROOT / '.env')
+load_dotenv(REPO_ROOT / ".env")
 
 """
 print(f"Base dir: {BASE_DIR}")
@@ -32,8 +32,7 @@ print(os.getenv('POSTGRES_PASSWORD'))
 print(os.getenv('POSTGRES_HOST', 'postgres'))
 print(os.getenv('POSTGRES_PORT', 5432))
 """
-#sys.exit()
-
+# sys.exit()
 
 
 # Quick-start development settings - unsuitable for production
@@ -105,13 +104,13 @@ WSGI_APPLICATION = "minopy.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
-        'PORT': os.getenv('POSTGRES_PORT', 5432),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST", "postgres"),
+        "PORT": os.getenv("POSTGRES_PORT", 5432),
     }
 }
 
@@ -162,7 +161,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-#MEDIA_URL = "/media/"
+# MEDIA_URL = "/media/"
 
 # Default storage settings, with the staticfiles storage updated.
 # See https://docs.djangoproject.com/en/5.2/ref/settings/#std-setting-STORAGES
@@ -176,7 +175,7 @@ STORAGES = {
     # See https://docs.djangoproject.com/en/5.2/ref/contrib/staticfiles/#manifeststaticfilesstorage
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    }
+    },
 }
 
 # Default file storage: media → MinIO bucket

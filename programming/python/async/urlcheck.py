@@ -6,8 +6,8 @@ Checks bunch of urls
 import asyncio
 import requests
 
-async def checkUrl(url: str) -> None:
 
+async def checkUrl(url: str) -> None:
     code: int = 0
 
     try:
@@ -20,9 +20,9 @@ async def checkUrl(url: str) -> None:
         case 200:
             print(f"[OK] {url}")
         case 300:
-            print(f"[WARN] redirected {url}") # But to where?
+            print(f"[WARN] redirected {url}")  # But to where?
         case _:
-             print(f"[FAIL] bad code: {code} for {url}")
+            print(f"[FAIL] bad code: {code} for {url}")
 
 
 async def main() -> None:
@@ -35,7 +35,7 @@ async def main() -> None:
         "https://www.python.cz/",
         "https://pythex.org/",
         "https://pyladies.cz/",
-        "https://pyladies.czz/"
+        "https://pyladies.czz/",
     ]
 
     tasks: list[asyncio.Task] = []
@@ -44,5 +44,6 @@ async def main() -> None:
         tasks.append(asyncio.create_task(checkUrl(url)))
 
     await asyncio.gather(*tasks)
+
 
 asyncio.run(main())

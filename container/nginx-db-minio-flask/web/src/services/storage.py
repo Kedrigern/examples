@@ -74,10 +74,7 @@ def ensure_logo(bucket_name: str, local_path: str = "static/logo.png") -> str:
         )
         if not exists:
             client.fput_object(
-                bucket_name,
-                'logo.png',
-                local_path,
-                content_type='image/png'
+                bucket_name, "logo.png", local_path, content_type="image/png"
             )
         return f"/static/{bucket_name}/logo.png"
     except S3Error:

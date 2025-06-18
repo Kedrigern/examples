@@ -27,19 +27,19 @@ Always maintain professional courtesy and provide direct, relevant recommendatio
 load_dotenv(dotenv_path="../../.env")
 
 agent = Agent(
-        'gemini-1.5-flash',
-        system_prompt=system_promt,
-        tools=[KnowledgeBase.overview, KnowledgeBase.models, KnowledgeBase.loan]
-    )
+    "gemini-1.5-flash",
+    system_prompt=system_promt,
+    tools=[KnowledgeBase.overview, KnowledgeBase.models, KnowledgeBase.loan],
+)
 
 
 def main():
     simple_questions = [
-        'I need huge lorry',
-        'I am single business man and I need fast and sexy car for fun and good representation.',
-        'Hello, we are family of 6 which need car for daily commuting and holidays',
-        'Hi, we are family of 4 living in the mouintains, so we need 4x4 car. Our budget is 900 000',
-        'Hi, we are family of 4 living in the mouintains, so we need 4x4 car. Our budget is 500 000'
+        "I need huge lorry",
+        "I am single business man and I need fast and sexy car for fun and good representation.",
+        "Hello, we are family of 6 which need car for daily commuting and holidays",
+        "Hi, we are family of 4 living in the mouintains, so we need 4x4 car. Our budget is 900 000",
+        "Hi, we are family of 4 living in the mouintains, so we need 4x4 car. Our budget is 500 000",
     ]
     for question in simple_questions:
         result = agent.run_sync(question)

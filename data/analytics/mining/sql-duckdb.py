@@ -6,7 +6,7 @@ duckdb.sql() -- vrací objekt relace, který reprezentuje výsledek dotazu.
 
 import duckdb as dd
 
-con: dd.DuckDBPyConnection = dd.connect(':memory:')
+con: dd.DuckDBPyConnection = dd.connect(":memory:")
 
 stm1: str = """
 CREATE TABLE people (
@@ -23,14 +23,14 @@ stm3: str = "SELECT id FROM people"
 stm4: str = "INSERT INTO people2 VALUES"
 
 print(type(con))
-con.execute(stm1)           # Create and insert
+con.execute(stm1)  # Create and insert
 
 names: dd.DuckDBPyRelation = con.sql(stm2)
 
 print(type(names))
-print(names)             # Graphical string
+print(names)  # Graphical string
 print(names.fetchall())  # Python objects
-print(names.df())        # Pandas dataframe     
+print(names.df())  # Pandas dataframe
 
 ids = con.sql(stm3)
 print(ids.fetchnumpy())  # Numpy object

@@ -1,6 +1,6 @@
 import duckdb as dd
 
-con = dd.connect(':memory:')
+con = dd.connect(":memory:")
 
 fp_name: str = "../data/dd-name.csv"
 fp_hobby: str = "../data/dd-hobby.csv"
@@ -26,9 +26,7 @@ con.execute("CREATE TABLE name AS SELECT * FROM rel")
 con.sql("SHOW ALL TABLES;").show()
 
 res = con.execute("SELECT * FROM name WHERE id = ?", [1])
-print(res.fetchall()) # připadně .df()
+print(res.fetchall())  # připadně .df()
 
-res = con.execute("SELECT * FROM name WHERE name = $NAME", {'name': 'john'})
+res = con.execute("SELECT * FROM name WHERE name = $NAME", {"name": "john"})
 print(res.fetchall())
-
-
