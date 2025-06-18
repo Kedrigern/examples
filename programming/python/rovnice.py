@@ -1,4 +1,5 @@
 import numpy as np
+
 """
 Řešení soustavy rovnic:
 https://www.wolframalpha.com/calculators/system-equation-calculator

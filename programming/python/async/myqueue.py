@@ -1,14 +1,16 @@
 import asyncio
 
+
 # vykonání úloh, jejichž argumenty jsou přečteny z fronty
 async def task(name, queue):
     print(f"\tCoroutine #{name} started")
     while not queue.empty():
         param = await queue.get()
-        print(f"\t\tTask with argument {param : 5.2f} started")
+        print(f"\t\tTask with argument {param: 5.2f} started")
         await asyncio.sleep(5)
-        print(f"\t\tTask with argument {param : 5.2f} finished")
+        print(f"\t\tTask with argument {param: 5.2f} finished")
     print(f"\tCoroutine #{name} finished")
+
 
 # funkce, která dokáže dočasně předat řízení přes await
 async def main():
@@ -29,6 +31,7 @@ async def main():
         asyncio.create_task(task(5, queue)),
     )
     print("Main finished")
+
 
 # spuštění funkce, jenž je definována s async
 asyncio.run(main())

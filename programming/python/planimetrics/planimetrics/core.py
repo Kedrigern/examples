@@ -6,7 +6,7 @@ class Point:
     y = 0
     label = ""
 
-    def __init__(self, x, y, label = ""):
+    def __init__(self, x, y, label=""):
         """
         :param x: position on x axe
         :param y: position on y axe
@@ -48,7 +48,7 @@ class Point:
 
         if dx == 0:
             if dy < 0:
-                return 180+90
+                return 180 + 90
             else:
                 return 90
 
@@ -73,10 +73,9 @@ class Point:
 
 
 class Line:
-
     def __init__(self, start, end):
         if isinstance(start, tuple):
-            self.start = Point(start[0],start[1])
+            self.start = Point(start[0], start[1])
         else:
             self.start = start
         if isinstance(end, tuple):

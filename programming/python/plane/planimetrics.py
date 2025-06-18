@@ -16,7 +16,8 @@ from typing import Tuple, Self
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 
-Point = Tuple[float,float]
+Point = Tuple[float, float]
+
 
 @dataclass
 class Line:
@@ -25,7 +26,7 @@ class Line:
 
     @property
     def slope(self) -> float:
-        return (self.p2[1]-self.p2[0]) / (self.p1[1]-self.p2[0])
+        return (self.p2[1] - self.p2[0]) / (self.p1[1] - self.p2[0])
 
     def isParallelTo(self, line: Self) -> bool:
         return self.slope == line.slope
@@ -36,11 +37,12 @@ class Line:
     def findIntersection(self, line: Self) -> Point:
         raise NotImplementedError
 
-class LineSegment(Line):
 
+class LineSegment(Line):
     @property
     def length(self) -> float:
-        return sqrt( pow(self.p2[0]-self.p1[0],2) + pow(self.p2[1]-self.p1[1],2))
+        return sqrt(pow(self.p2[0] - self.p1[0], 2) + pow(self.p2[1] - self.p1[1], 2))
+
 
 class Shape(ABC):
     @abstractmethod
@@ -54,6 +56,7 @@ class Shape(ABC):
     @abstractmethod
     def symbol(self, verbose=False) -> str:
         pass
+
 
 @dataclass
 class Circle(Shape):
@@ -73,7 +76,7 @@ class Circle(Shape):
         return self.r * 2
 
     def volume(self) -> float:
-        return pi * pow(self.r,2)
+        return pi * pow(self.r, 2)
 
     def perimeter(self) -> float:
         return 2 * pi * self.r
@@ -83,6 +86,7 @@ class Circle(Shape):
             return f"○: {self.o}, ∅ {self.r}"
         return "○"
 
+
 @dataclass
 class Rectangle(Shape):
     """
@@ -91,8 +95,8 @@ class Rectangle(Shape):
     a ---- b
     """
 
-    a: Point # left down corner
-    c: Point # right up corner
+    a: Point  # left down corner
+    c: Point  # right up corner
 
     @property
     def b(self) -> Point:
@@ -121,6 +125,7 @@ class Rectangle(Shape):
             return f"▭ A: {self.a}, B: {self.b}, C: {self.c}, D: {self.d}"
         return "▭"
 
+
 @dataclass
 class Triangle(Shape):
     a: Point
@@ -129,15 +134,15 @@ class Triangle(Shape):
 
     @property
     def edge_a(self) -> LineSegment:
-        return LineSegment(self.b,self.c)
+        return LineSegment(self.b, self.c)
 
     @property
     def edge_b(self) -> LineSegment:
-        return LineSegment(self.a,self.c)
+        return LineSegment(self.a, self.c)
 
     @property
     def edge_c(self) -> LineSegment:
-        return LineSegment(self.a,self.b)
+        return LineSegment(self.a, self.b)
 
     def volume(self) -> float:
         raise NotImplementedError()
@@ -150,25 +155,27 @@ class Triangle(Shape):
             return f"△ A: {self.a}, B: {self.b}, C: {self.c}"
         return "△"
 
+
 class Polygon(Shape):
     pass
 
-if __name__ == "__main__":
-    po = (0,0)
-    p1 = (1,1)
-    p2 = (1,0)
-    p3 = (1,1)
-    p4 = (2,1)
-    p5 = (3,3)
 
-    l1 = Line(p1,p3)
-    l2 = Line(p3,p4) # perpendicular to X axis
-    l3 = Line(p3,p5)
-    l4 = Line(p2,p3) # perpendicular to Y axis
-    c = Circle(p3,1)
-    r1 = Rectangle(p1,p3)
-    r2 = Rectangle(p1,p4)
-    t1 = Triangle(p1,p2,p3)
+if __name__ == "__main__":
+    po = (0, 0)
+    p1 = (1, 1)
+    p2 = (1, 0)
+    p3 = (1, 1)
+    p4 = (2, 1)
+    p5 = (3, 3)
+
+    l1 = Line(p1, p3)
+    l2 = Line(p3, p4)  # perpendicular to X axis
+    l3 = Line(p3, p5)
+    l4 = Line(p2, p3)  # perpendicular to Y axis
+    c = Circle(p3, 1)
+    r1 = Rectangle(p1, p3)
+    r2 = Rectangle(p1, p4)
+    t1 = Triangle(p1, p2, p3)
 
     print(
         "Example of basic planimetrics implemented in Python:\n",
@@ -179,5 +186,5 @@ if __name__ == "__main__":
         f"{c.symbol()} {c} ∅ {c.r}\t\tV: {c.volume():.3f}\tP: {c.perimeter():.3f}\n",
         f"{r1.symbol()} {r1}\tV: {r1.volume()}\t\tP: {r1.perimeter()}\n",
         f"{r2.symbol()} {r2}\tV: {r2.volume()}\t\tP: {r2.perimeter()}\n",
-        f"{t1.symbol()} {t1} V: \t P: {t1.perimeter():.3f}"
+        f"{t1.symbol()} {t1} V: \t P: {t1.perimeter():.3f}",
     )

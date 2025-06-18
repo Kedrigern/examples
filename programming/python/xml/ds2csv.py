@@ -41,31 +41,39 @@ sample = """
 """
 test = True
 
+
 def parseDSxml(root):
-  ns = root.nsmap
-  boxes = root.findall('box', ns)
-  result = []
-  for box in boxes:
-    result.append([
-      box.find('id', ns).text,
-      box.find('type', ns).text,
-      box.find('name/person/firstName', ns).text, 
-      box.find('name/person/lastName', ns).text])
-  return result
-  
+    ns = root.nsmap
+    boxes = root.findall("box", ns)
+    result = []
+    for box in boxes:
+        result.append(
+            [
+                box.find("id", ns).text,
+                box.find("type", ns).text,
+                box.find("name/person/firstName", ns).text,
+                box.find("name/person/lastName", ns).text,
+            ]
+        )
+    return result
+
+
 def export(res):
-  with open('ds.csv', 'w', newline='\n') as csvfile:
-    writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(["id", "type", "firstname", "lastname"])
-    for r in res:
-      writer.writerow(r)
+    with open("ds.csv", "w", newline="\n") as csvfile:
+        writer = csv.writer(
+            csvfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL
+        )
+        writer.writerow(["id", "type", "firstname", "lastname"])
+        for r in res:
+            writer.writerow(r)
+
 
 if test:
-  root = ET.fromstring(sample)
+    root = ET.fromstring(sample)
 else:
-  fp = "./datafile-seznam_ds_fo-20181205182004.xml"
-  tree = ET.parse(fp)
-  root = tree.getroot()
+    fp = "./datafile-seznam_ds_fo-20181205182004.xml"
+    tree = ET.parse(fp)
+    root = tree.getroot()
 
 res = parseDSxml(root)
 export(res)

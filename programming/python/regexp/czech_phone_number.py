@@ -32,7 +32,7 @@ def test_valid_czech_phone_numbers():
         "123 456 789",
         "+420123456789",
         "+420 123 456 789",
-        "00420 123 456 789"
+        "00420 123 456 789",
     ]
     for number in valid_numbers:
         assert is_valid_czech_phone_number(number), f"Should match: {number}"
@@ -41,19 +41,20 @@ def test_valid_czech_phone_numbers():
 
 def test_invalid_czech_phone_numbers():
     invalid_numbers = [
-        "1234567890",             # Nesprávná délka
-        "+42012345",              # Příliš krátké
-        "+421 123 456 789",       # Špatná mezinárodní předvolba
-        "+420 123 456 789 123",   # Více trojic
-        "1234567891a",            # Obsahuje písmeno
-        "123-456-789",            # Nepovolené znaky
-        "+ 123 456 789"           # Nepovolené znaky
+        "1234567890",  # Nesprávná délka
+        "+42012345",  # Příliš krátké
+        "+421 123 456 789",  # Špatná mezinárodní předvolba
+        "+420 123 456 789 123",  # Více trojic
+        "1234567891a",  # Obsahuje písmeno
+        "123-456-789",  # Nepovolené znaky
+        "+ 123 456 789",  # Nepovolené znaky
     ]
     for number in invalid_numbers:
-        assert not is_valid_czech_phone_number(
-            number), f"Should not match: {number}"
-        assert not is_valid_czech_phone_number_inline(
-                number), f"Should not match: {number}"
+        assert not is_valid_czech_phone_number(number), f"Should not match: {number}"
+        assert not is_valid_czech_phone_number_inline(number), (
+            f"Should not match: {number}"
+        )
+
 
 if __name__ == "__main__":
     pytest.main()

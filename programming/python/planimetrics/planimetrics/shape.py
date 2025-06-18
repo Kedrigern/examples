@@ -2,7 +2,6 @@ from planimetrics.core import Point
 
 
 class Shape:
-
     def area(self):
         pass
 
@@ -62,7 +61,6 @@ class Shape:
 
 
 class Triangle(Shape):
-
     def __init__(self, points):
         """
         :param points: set of three points
@@ -80,18 +78,18 @@ class Triangle(Shape):
 
     def _determineNodes(self, points):
         distances = {
-            'e1': points[0].distance(points[1]),
-            'e2': points[1].distance(points[2]),
-            'e3': points[2].distance(points[3])
+            "e1": points[0].distance(points[1]),
+            "e2": points[1].distance(points[2]),
+            "e3": points[2].distance(points[3]),
         }
 
-        ec = max(distances, val = lambda record: distances[record])
+        ec = max(distances, val=lambda record: distances[record])
 
-        if ec == 'e1':
+        if ec == "e1":
             self.C = points.pop(2)
-        elif ec == 'e2':
+        elif ec == "e2":
             self.C = points.pop(0)
-        elif ec == 'e3':
+        elif ec == "e3":
             self.C = points.pop(1)
 
         if points[0].x < points[1].x:
@@ -142,5 +140,3 @@ class Rectangle(Shape):
         l1 = self.A.distance(self.B)
         l2 = self.A.distance(self.D)
         return l1 * l2
-
-

@@ -16,5 +16,6 @@ def main():
     print("Hello world")
     print("Line from %s to %s has length %s" % (p1, p2, l.distance()))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

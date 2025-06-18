@@ -24,18 +24,21 @@ sample = """
 fromFile = True
 
 if fromFile:
-  fp = 'ns.xml'
-  tree = ET.parse(fp)
-  root = tree.getroot()
+    fp = "ns.xml"
+    tree = ET.parse(fp)
+    root = tree.getroot()
 else:
-  root = ET.fromstring(sample)
+    root = ET.fromstring(sample)
 
 
-namespaces = {'owl': 'http://www.w3.org/2002/07/owl#'}
-ns1 = {'owl': 'http://www.w3.org/2002/07/owl#'}
-ns2 = {'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'}
+namespaces = {"owl": "http://www.w3.org/2002/07/owl#"}
+ns1 = {"owl": "http://www.w3.org/2002/07/owl#"}
+ns2 = {"rdfs": "http://www.w3.org/2000/01/rdf-schema#"}
 
 print("Root element: ", root)
-print("owl:Class: ", root.findall('owl:Class', root.nsmap))
-print('owl:Class/rdfs:label: ', root.findall('owl:Class/rdfs:label', root.nsmap))
-print('owl:Class/rdfs:label text: ', root.findall('owl:Class/rdfs:label', root.nsmap)[0].text)
+print("owl:Class: ", root.findall("owl:Class", root.nsmap))
+print("owl:Class/rdfs:label: ", root.findall("owl:Class/rdfs:label", root.nsmap))
+print(
+    "owl:Class/rdfs:label text: ",
+    root.findall("owl:Class/rdfs:label", root.nsmap)[0].text,
+)
